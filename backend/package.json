@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "/dist/server.js",
+  "scripts": {
+    "start": "node ./dist/server.js",
+    "dev": "nodemon server.ts",
+    "build": "tsc"
+  },
+  "author": "Javad Hashemzadeh",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "moment-jalaali": "^0.10.4",
+    "mongoose": "^8.9.5"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/moment-jalaali": "^0.7.9",
+    "@types/node": "^22.10.6",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

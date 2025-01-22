@@ -1,0 +1,2 @@
+- init project (backend and frontend)
+- model, controller and routes in backend setups
