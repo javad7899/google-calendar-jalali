@@ -4,7 +4,6 @@ import router from "./routes";
 
 const app = express();
 
-// Middleware
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -13,6 +12,5 @@ app.use(
 );
 app.use(express.json());
 
-// Routes
 app.use("/api/v1", router);
 export default app;

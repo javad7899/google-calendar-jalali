@@ -24,6 +24,7 @@ export const createEvent = async (
       return;
     }
 
+    // Validate recurring fields
     if (isRecurring && (!recurrencePattern || !occurrences)) {
       res.status(400).json({
         error:
@@ -32,7 +33,6 @@ export const createEvent = async (
       return;
     }
 
-    // Create the event (middleware handles recurrence logic)
     const event = new Event({
       title,
       description,

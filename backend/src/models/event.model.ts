@@ -48,12 +48,17 @@ const eventSchema = new Schema<IEvent>(
   { timestamps: true }
 );
 
+// Pre-save middleware to handle recurring events.
 eventSchema.pre("save", async function (next) {
   if (this.isNew && this.isRecurring && this.recurrencePattern) {
     const start = moment(this.startDate, "jYYYY-jMM-jDD");
     const eventsToCreate = [];
+    const totalOccurrences = this.occurrences;
+    const initialIndex = 1;
 
-    for (let i = 1; i < (this.occurrences || 1); i++) {
+    this.recurrenceIndex = initialIndex;
+
+    for (let i = 1; i < (totalOccurrences || 1); i++) {
       let nextDate;
 
       switch (this.recurrencePattern) {
@@ -80,7 +85,8 @@ eventSchema.pre("save", async function (next) {
           time: this.time,
           isRecurring: true,
           recurrencePattern: this.recurrencePattern,
-          recurrenceIndex: i + 1,
+          recurrenceIndex: initialIndex + i,
+          occurrences: totalOccurrences,
         });
       }
     }
