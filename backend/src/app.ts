@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import router from "./routes";
 
 const app = express();
 
@@ -13,4 +14,5 @@ app.use(
 app.use(express.json());
 
 // Routes
+app.use("/api/v1", router);
 export default app;
