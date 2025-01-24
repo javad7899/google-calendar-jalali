@@ -12,8 +12,8 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
-    roles: {
-      "@typescript-eslint/no-explicit-any": "warn",
+    rules: {
+      "@typescript-eslint/no-explicit-any": "warn", // Corrected `roles` to `rules`
     },
   },
 ];

@@ -26,4 +26,6 @@ export type EventsState = {
   setEventForm: (newForm: Partial<Event>) => void;
   deleteEvent: (date: string, eventId: string) => Promise<void>;
   updateEvent: (date: string, updatedEvent: Event) => Promise<void>;
+  isSingleDayView: boolean;
+  setIsSingleDayView: (isSingleDayView: boolean) => void;
 };

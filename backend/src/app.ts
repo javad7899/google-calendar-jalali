@@ -6,7 +6,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://google-calendar-fe.chbk.app"],
+    // origin: ["https://google-calendar-fe.chbk.app"],
+    origin: ["http://192.168.195.80:3000"],
     credentials: true,
   })
 );

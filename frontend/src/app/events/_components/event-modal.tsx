@@ -5,21 +5,29 @@ import { BsSave, BsExclamationDiamond } from "react-icons/bs";
 import { SelectField } from "@/components/select-field";
 import { useEventsStore } from "@/stores/eventStore";
 
-const EventModal: React.FC = () => {
-  const { eventForm, setEventForm, closeModal, saveEvent, updateEvent } =
-    useEventsStore();
+interface EventModalProps {
+  isSingleDay: boolean;
+}
 
-  const isEditing = !!eventForm._id;
+const EventModal: React.FC<EventModalProps> = ({ isSingleDay }) => {
+  const {
+    eventForm,
+    setEventForm,
+    closeModal,
+    saveEvent,
+    updateEvent,
+    setIsSingleDayView,
+  } = useEventsStore();
+
+  const isEditing = Boolean(eventForm._id);
 
   const handleTimeChange = (value: string) => {
     const sanitizedValue = value.replace(/\D/g, "");
     if (sanitizedValue.length <= 4) {
-      let formattedValue = sanitizedValue;
-      if (sanitizedValue.length > 2) {
-        formattedValue = `${sanitizedValue.slice(0, 2)}:${sanitizedValue.slice(
-          2
-        )}`;
-      }
+      const formattedValue =
+        sanitizedValue.length > 2
+          ? `${sanitizedValue.slice(0, 2)}:${sanitizedValue.slice(2)}`
+          : sanitizedValue;
       setEventForm({ ...eventForm, time: formattedValue });
     }
   };
@@ -42,10 +50,12 @@ const EventModal: React.FC = () => {
 
     try {
       if (isEditing) {
+        setIsSingleDayView(true);
         await updateEvent(eventForm.startDate, eventForm);
         toast.success("رویداد با موفقیت ویرایش شد.");
       } else {
-        await saveEvent(); // ذخیره رویداد جدید و واکشی مجدد رویدادهای روز
+        setIsSingleDayView(isSingleDay);
+        await saveEvent();
       }
       closeModal();
     } catch (error) {
@@ -61,7 +71,6 @@ const EventModal: React.FC = () => {
           {isEditing ? "ویرایش رویداد" : "افزودن رویداد"}
         </h3>
 
-        {/* startDate text filed is readonly */}
         <TextField
           type="text-input"
           label="تاریخ"
@@ -97,7 +106,6 @@ const EventModal: React.FC = () => {
           maxLength={5}
         />
 
-        {/* recurrencePattern select filed is only in add mode */}
         {!isEditing && (
           <>
             <SelectField

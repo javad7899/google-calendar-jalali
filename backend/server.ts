@@ -4,13 +4,7 @@ dotenv.config();
 
 import connectDB from "./src/configs/db.config";
 
-const PORT = process.env.PORT || 8000;
-
-app.get("/", (req, res) => {
-  res.status(200).json({
-    msg: "ok",
-  });
-});
+const PORT = process.env.PORT || 4000;
 
 const start = async () => {
   try {

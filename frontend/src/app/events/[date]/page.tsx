@@ -24,6 +24,7 @@ const DayView: React.FC = () => {
   } = useEventsStore();
 
   const [currentDate, setCurrentDate] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const date = params?.date as string | undefined;
@@ -38,9 +39,13 @@ const DayView: React.FC = () => {
 
   useEffect(() => {
     if (currentDate) {
-      fetchSingleDayEvents(currentDate).catch(() =>
-        toast.error("خطا در واکشی رویدادها")
-      );
+      setIsLoading(true); // شروع بارگذاری
+      fetchSingleDayEvents(currentDate)
+        .then(() => setIsLoading(false)) // پایان بارگذاری
+        .catch(() => {
+          setIsLoading(false);
+          toast.error("خطا در واکشی رویدادها");
+        });
     }
   }, [currentDate, fetchSingleDayEvents]);
 
@@ -79,7 +84,10 @@ const DayView: React.FC = () => {
           <span>رویدادهای</span>
           <span>{currentDate}</span>
         </h1>
-        {events.length ? (
+
+        {isLoading ? (
+          <p className="text-center text-gray-600">در حال بارگذاری...</p>
+        ) : events.length ? (
           <div className="space-y-4">
             {events.map((event, index) => (
               <SinglePageEventItem
@@ -111,7 +119,7 @@ const DayView: React.FC = () => {
         </div>
       </div>
 
-      {isModal && <EventModal />}
+      {isModal && <EventModal isSingleDay={true} />}
     </div>
   );
 };

@@ -13,6 +13,9 @@ export const useEventsStore = create<EventsState>((set, get) => ({
   currentDate: dayjs().locale("fa").calendar("jalali"),
   setCurrentDate: (date: Dayjs) => set({ currentDate: date }),
   isModal: false,
+  isSingleDayView: false,
+  setIsSingleDayView: (isSingleDay: boolean) =>
+    set({ isSingleDayView: isSingleDay }),
   eventForm: {
     startDate: dayjs().locale("fa").calendar("jalali").format("YYYY-MM-DD"),
     title: "",
@@ -41,18 +44,20 @@ export const useEventsStore = create<EventsState>((set, get) => ({
   fetchAllEvents: async () => {
     try {
       const response = await customAxios.get(`/events`);
-      set({ events: response.data || [] });
+      set({ events: Array.isArray(response.data) ? response.data : [] });
     } catch (error) {
       console.error("Error fetching all events:", error);
+      set({ events: [] }); // Ensure fallback to an empty array
     }
   },
+
   fetchSingleDayEvents: async (date: string) => {
     try {
       const response = await customAxios.get(`/events/${date}`);
-      set({ events: response.data || [] });
+      set({ events: Array.isArray(response.data) ? response.data : [] });
     } catch (error) {
       console.error("Error fetching single day events:", error);
-      set({ events: [] });
+      set({ events: [] }); // Ensure fallback to an empty array
     }
   },
 
@@ -68,7 +73,12 @@ export const useEventsStore = create<EventsState>((set, get) => ({
   closeModal: () => set({ isModal: false }),
   saveEvent: async () => {
     try {
-      const { eventForm, fetchAllEvents, fetchSingleDayEvents } = get();
+      const {
+        eventForm,
+        fetchAllEvents,
+        fetchSingleDayEvents,
+        isSingleDayView,
+      } = get();
 
       const { title, startDate, time, recurrencePattern, occurrences } =
         eventForm;
@@ -93,7 +103,8 @@ export const useEventsStore = create<EventsState>((set, get) => ({
       const response = await customAxios.post(`/events`, requestData);
 
       if (response.status === 201) {
-        if (eventForm._id === response.data._id) {
+        // بررسی حالت صفحه
+        if (isSingleDayView) {
           await fetchSingleDayEvents(startDate);
         } else {
           await fetchAllEvents();
