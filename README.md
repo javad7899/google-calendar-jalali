@@ -188,14 +188,13 @@ Each event includes:
 - **Functionality**: Implementation of all required features.
 - **Design**: Aesthetic and user-friendly.
 - **Responsiveness**: Proper functioning across various devices.
-- **Testing**: Test coverage and effectiveness.
 
 ---
 
 ## Live Demo and Repository
 
-- **Live Demo**: [Deployed on Vercel/Netlify](https://your-demo-link.com)
-- **GitHub Repository**: [Repo Link](https://github.com/your-repo/google-calendar-jalali)
+- **Live Demo**: [Deployed on Vercel/Netlify](https://google-calendar-fe.chbk.app/)
+- **GitHub Repository**: [Repo Link](https://github.com/javad7899/google-calendar-jalali)
 
 ---
 
@@ -206,12 +205,6 @@ Each event includes:
 3. Commit your changes: `git commit -m "Add feature-name"`.
 4. Push to the branch: `git push origin feature-name`.
 5. Open a pull request.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ---
 
