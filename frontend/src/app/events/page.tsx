@@ -19,7 +19,7 @@ const Calendar: React.FC = () => {
       <CalendarHeader />
       <DaysHeader />
       <Days />
-      {isModal && <EventModal />}
+      {isModal && <EventModal isSingleDay={false} />}
     </div>
   );
 };
