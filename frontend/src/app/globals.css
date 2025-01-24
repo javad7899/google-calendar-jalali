@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "YekanBakh";
+  src: url(/fonts/Yekan-Bakh-FaNum-04-Regular.woff);
+  font-weight: 400;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url(/fonts/Yekan-Bakh-FaNum-05-Medium.woff);
+  font-weight: 500;
+}
+@font-face {
+  font-family: "YekanBakh";
+  src: url(/fonts/Yekan-Bakh-FaNum-06-Bold.woff);
+  font-weight: 600;
+}
+
+* {
+  font-family: YekanBakh, Arial, sans-serif !important;
+}
+
+@layer base {
+  input,
+  textarea,
+  button {
+    @apply outline-none focus:outline-none;
+  }
+}

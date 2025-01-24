@@ -37,7 +37,8 @@ const eventSchema = new Schema<IEvent>(
     isRecurring: { type: Boolean, default: false },
     recurrencePattern: {
       type: String,
-      enum: ["daily", "weekly", "monthly"],
+      enum: ["daily", "weekly", "monthly", "none"],
+      default: "none",
       required: function (this: IEvent) {
         return this.isRecurring;
       },
@@ -94,7 +95,7 @@ eventSchema.pre("save", async function (next) {
     next();
 
     if (eventsToCreate.length > 0) {
-      await Event.insertMany(eventsToCreate);
+      await Event.insertMany(eventsToCreate); // اطمینان حاصل کنید که در اینجا هیچ خطایی رخ نمی‌دهد
     }
   } else {
     next();
